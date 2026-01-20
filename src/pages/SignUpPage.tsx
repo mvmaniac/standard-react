@@ -3,10 +3,10 @@ import { Link } from 'react-router';
 
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button.tsx';
+import { Input } from '@/components/ui/input.tsx';
 
-import { useSignUpMutation } from '@/queries/use-sign-up-mutation';
+import { useSignUpMutation } from '@/queries/use-sign-up-mutation.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 

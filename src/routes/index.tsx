@@ -1,14 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router';
 
-import MainLayout from '@/layouts/MainLayout';
+import MainLayout from '@/layouts/MainLayout.tsx';
 
-import ForgetPasswordPage from '@/pages/FogetPasswordPage';
-import IndexPage from '@/pages/IndexPage';
-import PostDetailPage from '@/pages/PostDetailPage';
-import ProfileDetailPage from '@/pages/ProfileDetailPage';
-import ResetPasswordPage from '@/pages/RestPasswordPage';
-import SignInPage from '@/pages/SignInPage';
-import SignUpPage from '@/pages/SignUpPage';
+import ForgetPasswordPage from '@/pages/FogetPasswordPage.tsx';
+import IndexPage from '@/pages/IndexPage.tsx';
+import PostDetailPage from '@/pages/PostDetailPage.tsx';
+import ProfileDetailPage from '@/pages/ProfileDetailPage.tsx';
+import ResetPasswordPage from '@/pages/RestPasswordPage.tsx';
+import SignInPage from '@/pages/SignInPage.tsx';
+import SignUpPage from '@/pages/SignUpPage.tsx';
 
 export default function AppRoutes() {
   return (

@@ -1,10 +1,10 @@
 import { type ReactNode, useEffect } from 'react';
 
-import { useIsSessionLoaded, useSetSession } from '@/stores/session';
+import { useIsSessionLoaded, useSetSession } from '@/stores/session.ts';
 
-import GlobalLoader from '@/components/GlobalLoader';
+import GlobalLoader from '@/components/GlobalLoader.tsx';
 
-import supabase from '@/shared/supabase';
+import supabase from '@/shared/supabase.ts';
 
 interface SessionProvidersProps {
   children: ReactNode;
@@ -19,7 +19,7 @@ export default function SessionProvider({ children }: SessionProvidersProps) {
       console.log('[dev] onAuthStateChange called...', _event, session);
       setSession(session);
     });
-  }, []);
+  }, [setSession]);
 
   if (!isSessionLoaded) return <GlobalLoader />;
   return children;

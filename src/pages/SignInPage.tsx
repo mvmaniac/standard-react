@@ -3,11 +3,11 @@ import { Link } from 'react-router';
 
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button.tsx';
+import { Input } from '@/components/ui/input.tsx';
 
-import { useSignInWithOauthMutation } from '@/queries/use-sign-in-with-oauth-mutation';
-import { useSignInWithPasswordMutation } from '@/queries/use-sign-in-with-password-mutation';
+import { useSignInWithOauthMutation } from '@/queries/use-sign-in-with-oauth-mutation.ts';
+import { useSignInWithPasswordMutation } from '@/queries/use-sign-in-with-password-mutation.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 

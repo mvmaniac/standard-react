@@ -1,2 +1,2 @@
-export { API_BASE_URL } from './api';
-export { QUERY_KEYS } from './key';
+export { API_BASE_URL } from './api.ts';
+export { QUERY_KEYS } from './key.ts';

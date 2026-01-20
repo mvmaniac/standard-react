@@ -1,7 +1,7 @@
-import AppProviders from '@/app/AppProviders';
-import SessionProvider from '@/app/SessionProvider';
+import AppProviders from '@/app/AppProviders.tsx';
+import SessionProvider from '@/app/SessionProvider.tsx';
 
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/components/ui/sonner.tsx';
 
 import AppRoutes from '@/routes';
 

@@ -1,2 +1,2 @@
-export { cn } from './cn';
-export { generateErrorMessage } from './error';
+export { cn } from './cn.ts';
+export { generateErrorMessage } from './error.ts';

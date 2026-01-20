@@ -1,6 +1,6 @@
 import type { Provider } from '@supabase/supabase-js';
 
-import supabase from '@/shared/supabase';
+import supabase from '@/shared/supabase.ts';
 
 export async function signUp({ email, password }: { email: string; password: string }) {
   const { data, error } = await supabase.auth.signUp({ email, password });

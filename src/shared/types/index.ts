@@ -1,2 +1,2 @@
-export type { Database, PostEntity } from './database';
-export type { UseMutationCallback } from './base';
+export type { Database, PostEntity } from './database.ts';
+export type { UseMutationCallback } from './base.ts';
