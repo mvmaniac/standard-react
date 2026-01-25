@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button.tsx';
 export default function EditPostItemButton(props: PostEntity) {
   const openEditPostModal = useOpenEditPostModal();
 
-  const handleButtonClick = () => {
+  const handleEditClick = () => {
     openEditPostModal({
       postId: props.id,
       content: props.content,
@@ -15,7 +15,7 @@ export default function EditPostItemButton(props: PostEntity) {
     });
   };
   return (
-    <Button variant="ghost" onClick={handleButtonClick} className="cursor-pointer">
+    <Button variant="ghost" onClick={handleEditClick} className="cursor-pointer">
       수정
     </Button>
   );

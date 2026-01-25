@@ -2,8 +2,10 @@ import { HeartIcon, MessageCircle } from 'lucide-react';
 
 import type { Post } from '@/shared/types';
 
-import EditPostItemButton from '@/components/posts/EditPostItemButton.tsx';
-import { Button } from '@/components/ui/button.tsx';
+import { useSession } from '@/stores/session.ts';
+
+import DeletePostButton from '@/components/posts/DeletePostButton.tsx';
+import EditPostButton from '@/components/posts/EditPostItemButton.tsx';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel.tsx';
 
 import { formatTimeAgo } from '@/shared/utils';
@@ -11,6 +13,11 @@ import { formatTimeAgo } from '@/shared/utils';
 import defaultAvatar from '@/assets/default-avatar.png';
 
 export default function PostItem(post: Post) {
+  const session = useSession();
+  const userId = session?.user.id;
+
+  const isMine = post.author.id === userId;
+
   return (
     <div className="flex flex-col gap-4 border-b pb-8">
       <div className="flex justify-between">
@@ -22,17 +29,17 @@ export default function PostItem(post: Post) {
           />
           <div>
             <div className="font-bold hover:underline">{post.author.nickname}</div>
-            <div className="text-muted-foreground text-sm">
-              {formatTimeAgo(post.created_at)}
-            </div>
+            <div className="text-muted-foreground text-sm">{formatTimeAgo(post.created_at)}</div>
           </div>
         </div>
 
         <div className="text-muted-foreground flex text-sm">
-          <EditPostItemButton {...post} />
-          <Button variant="ghost" className="cursor-pointer">
-            삭제
-          </Button>
+          {isMine && (
+            <>
+              <EditPostButton {...post} />
+              <DeletePostButton id={post.id} />{' '}
+            </>
+          )}
         </div>
       </div>
 

@@ -8,7 +8,7 @@ export function useCreatePost(callbacks?: UseMutationCallback) {
   return useMutation({
     mutationFn: createPostWithImages,
     onSuccess: () => {
-      if (callbacks?.onSuccess) callbacks?.onSuccess();
+      if (callbacks?.onSuccess) callbacks.onSuccess();
     },
     onError: (error) => {
       if (callbacks?.onError) callbacks.onError(error);

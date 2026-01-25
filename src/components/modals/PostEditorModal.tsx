@@ -23,9 +23,6 @@ interface Image {
 }
 
 export function PostEditorModal() {
-  const postEditorModal = usePostEditorModal();
-  const openAlertModal = useOpenAlertModal();
-
   const { mutate: createPost, isPending: isCreatePostPending } = useCreatePost({
     onSuccess: () => {
       postEditorModal.close();
@@ -36,7 +33,6 @@ export function PostEditorModal() {
       });
     },
   });
-
   const { mutate: updatePost, isPending: isUpdatePostPending } = useUpdatePost({
     onSuccess: () => {
       postEditorModal.close();
@@ -47,6 +43,9 @@ export function PostEditorModal() {
       });
     },
   });
+
+  const postEditorModal = usePostEditorModal();
+  const openAlertModal = useOpenAlertModal();
 
   const session = useSession();
 
@@ -76,8 +75,6 @@ export function PostEditorModal() {
     setContent(postEditorModal.type === 'EDIT' ? postEditorModal.content : '');
     setImages([]);
     textareaRef.current?.focus();
-
-    console.log('1번만!!!!!!!');
   });
 
   const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -128,6 +125,11 @@ export function PostEditorModal() {
   };
 
   useEffect(() => {
+    if (!postEditorModal.isOpen) return;
+    initFormOnOpen();
+  }, [postEditorModal.isOpen]);
+
+  useEffect(() => {
     if (!textareaRef.current) return;
     textareaRef.current.style.height = 'auto';
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
@@ -138,11 +140,6 @@ export function PostEditorModal() {
       images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
     };
   }, [images]);
-
-  useEffect(() => {
-    if (!postEditorModal.isOpen) return;
-    initFormOnOpen();
-  }, [postEditorModal.isOpen]);
 
   return (
     <Dialog open={postEditorModal.isOpen} onOpenChange={handleCloseModal}>
