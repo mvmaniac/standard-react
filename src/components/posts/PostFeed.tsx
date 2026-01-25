@@ -5,10 +5,10 @@ import Fallback from '@/components/Fallback.tsx';
 import Loader from '@/components/Loader.tsx';
 import PostItem from '@/components/posts/PostItem.tsx';
 
-import { useInfinitePostsDataQuery } from '@/queries/posts/use-infinite-posts-data-query.ts';
+import { useInfinitePostsQuery } from '@/queries/posts/use-infinite-posts-query.ts';
 
 export default function PostFeed() {
-  const { data, error, isPending, fetchNextPage, isFetchingNextPage } = useInfinitePostsDataQuery();
+  const { data, error, isPending, fetchNextPage, isFetchingNextPage } = useInfinitePostsQuery();
   const { ref, inView } = useInView();
 
   useEffect(() => {

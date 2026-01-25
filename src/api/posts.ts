@@ -1,6 +1,6 @@
 import type { PostEntity } from '@/shared/types';
 
-import { uploadImage } from '@/api/images-api.ts';
+import { uploadImage } from '@/api/images.ts';
 
 import supabase from '@/shared/supabase.ts';
 

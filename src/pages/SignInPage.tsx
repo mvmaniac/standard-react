@@ -8,8 +8,8 @@ import type { ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 
-import { useSignInWithOauthMutation } from '@/queries/auth/use-sign-in-with-oauth-mutation.ts';
-import { useSignInWithPasswordMutation } from '@/queries/auth/use-sign-in-with-password-mutation.ts';
+import { useSignInWithOauth } from '@/queries/auth/use-sign-in-with-oauth.ts';
+import { useSignInWithPassword } from '@/queries/auth/use-sign-in-with-password.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 
@@ -17,7 +17,7 @@ import gitHubLogo from '@/assets/github-mark.svg';
 
 export default function SignInPage() {
   const { mutate: signInWithPassword, isPending: isSignInWithPasswordPending } =
-    useSignInWithPasswordMutation({
+    useSignInWithPassword({
       onError: (error) => {
         const message = generateErrorMessage(error);
         toast.error(message, {
@@ -28,7 +28,7 @@ export default function SignInPage() {
       },
     });
   const { mutate: signInWithOAuth, isPending: isSignInWithOAuthPending } =
-    useSignInWithOauthMutation({
+    useSignInWithOauth({
       onError: (error) => {
         const message = generateErrorMessage(error);
         toast.error(message, {

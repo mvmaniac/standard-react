@@ -8,14 +8,14 @@ import type { ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 
-import { useUpdatePasswordMutation } from '@/queries/auth/use-upate-password-mutation.ts';
+import { useUpdatePassword } from '@/queries/auth/use-update-password.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 
 export default function ResetPasswordPage() {
   const navigate = useNavigate();
 
-  const { mutate: updatePassword, isPending: isUpdatePasswordPending } = useUpdatePasswordMutation({
+  const { mutate: updatePassword, isPending: isUpdatePasswordPending } = useUpdatePassword({
     onSuccess: () => {
       toast.info('비밀번호가 성공적으로 변경되었습니다.', {
         position: 'top-center',

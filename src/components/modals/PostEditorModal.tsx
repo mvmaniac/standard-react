@@ -14,8 +14,8 @@ import { Button } from '@/components/ui/button.tsx';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel.tsx';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog.tsx';
 
-import { useCreatePostMutation } from '@/queries/posts/use-create-post-mutation.ts';
-import { useUpdatePostMutation } from '@/queries/posts/use-update-post-mutation.ts';
+import { useCreatePost } from '@/queries/posts/use-create-post.ts';
+import { useUpdatePost } from '@/queries/posts/use-update-post.ts';
 
 interface Image {
   file: File;
@@ -26,7 +26,7 @@ export function PostEditorModal() {
   const postEditorModal = usePostEditorModal();
   const openAlertModal = useOpenAlertModal();
 
-  const { mutate: createPost, isPending: isCreatePostPending } = useCreatePostMutation({
+  const { mutate: createPost, isPending: isCreatePostPending } = useCreatePost({
     onSuccess: () => {
       postEditorModal.close();
     },
@@ -37,7 +37,7 @@ export function PostEditorModal() {
     },
   });
 
-  const { mutate: updatePost, isPending: isUpdatePostPending } = useUpdatePostMutation({
+  const { mutate: updatePost, isPending: isUpdatePostPending } = useUpdatePost({
     onSuccess: () => {
       postEditorModal.close();
     },

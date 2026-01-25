@@ -2,9 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 
 import type { UseMutationCallback } from '@/shared/types';
 
-import { updatePost } from '@/api/posts-api.ts';
+import { updatePost } from '@/api/posts.ts';
 
-export function useUpdatePostMutation(callbacks?: UseMutationCallback) {
+export function useUpdatePost(callbacks?: UseMutationCallback) {
   return useMutation({
     mutationFn: updatePost,
     onSuccess: () => {

@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { fetchPosts } from '@/api/posts-api.ts';
+import { fetchPosts } from '@/api/posts.ts';
 
 import { POST_PAGE_SIZE, QUERY_KEYS } from '@/shared/constants';
 
-export function usePostsDataQuery(pageParam = 0) {
+export function usePostsQuery(pageParam = 0) {
   return useQuery({
     queryKey: QUERY_KEYS.post.list,
     queryFn: async () => {

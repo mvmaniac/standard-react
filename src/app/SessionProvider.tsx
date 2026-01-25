@@ -4,7 +4,7 @@ import { useIsSessionLoaded, useSession, useSetSession } from '@/stores/session.
 
 import GlobalLoader from '@/components/GlobalLoader.tsx';
 
-import { useProfileDataQuery } from '@/queries/use-profile-data-query.ts';
+import { useProfileQuery } from '@/queries/profiles/use-profile-query.ts';
 
 import supabase from '@/shared/supabase.ts';
 
@@ -17,7 +17,7 @@ export default function SessionProvider({ children }: SessionProvidersProps) {
   const setSession = useSetSession();
   const isSessionLoaded = useIsSessionLoaded();
 
-  const { isLoading: isProfileLoading } = useProfileDataQuery(session?.user.id ?? '');
+  const { isLoading: isProfileLoading } = useProfileQuery(session?.user.id ?? '');
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {

@@ -8,12 +8,12 @@ import type { ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 
-import { useSignUpMutation } from '@/queries/auth/use-sign-up-mutation.ts';
+import { useSignUp } from '@/queries/auth/use-sign-up.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 
 export default function SignUpPage() {
-  const { mutate: signUp, isPending: isSignUpPending } = useSignUpMutation({
+  const { mutate: signUp, isPending: isSignUpPending } = useSignUp({
     onError: (error) => {
       const message = generateErrorMessage(error);
       toast.error(message, {

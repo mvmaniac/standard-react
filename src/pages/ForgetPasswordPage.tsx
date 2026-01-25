@@ -7,13 +7,13 @@ import type { ChangeEvent } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 
-import { useResetPasswordForEmailMutation } from '@/queries/auth/use-reset-password-for-email-mutation.ts';
+import { useResetPasswordForEmail } from '@/queries/auth/use-reset-password-for-email.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 
 export default function ForgetPasswordPage() {
   const { mutate: resetPasswordForEmail, isPending: isResetPasswordForEmailPending } =
-    useResetPasswordForEmailMutation({
+    useResetPasswordForEmail({
       onSuccess: () => {
         toast.info('인증 메일이 잘 발송되었습니다.', {
           position: 'top-center',

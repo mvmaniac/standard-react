@@ -25,15 +25,17 @@ type OpenState = CreateMode | EditMode;
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 type CloseState = { type: 'CLOSE', isOpen: false };
 
-type State = OpenState | CloseState;
+type PostEditorModalState = OpenState | CloseState;
+
+interface PostEditorModalActions {
+  openCreate: () => void;
+  openEdit: (param: Omit<EditMode, 'isOpen' | 'type'>) => void;
+  close: () => void;
+}
 
 interface PostEditorModalStore {
-  state: State;
-  actions: {
-    openCreate: () => void;
-    openEdit: (param: Omit<EditMode, 'isOpen' | 'type'>) => void;
-    close: () => void;
-  };
+  state: PostEditorModalState;
+  actions: PostEditorModalActions;
 }
 
 const initialState: CloseState = { isOpen: false, type: 'CLOSE' };
@@ -66,7 +68,7 @@ const usePostEditorModalStore = create<PostEditorModalStore>()(
   ),
 );
 
-const isEditMode = (s: State): s is EditMode => s.isOpen && s.type === 'EDIT';
+const isEditMode = (s: PostEditorModalState): s is EditMode => s.isOpen && s.type === 'EDIT';
 
 export const usePostEditorModal = () => {
   return usePostEditorModalStore(

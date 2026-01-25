@@ -17,14 +17,16 @@ interface CloseState {
   description?: never;
 }
 
-type State = OpenState | CloseState;
+type AlertModalState = OpenState | CloseState;
+
+interface AlertModalActions {
+  open: (params: Omit<OpenState, 'isOpen'>) => void;
+  close: () => void;
+}
 
 interface AlertModalStore {
-  state: State;
-  actions: {
-    open: (params: Omit<OpenState, 'isOpen'>) => void;
-    close: () => void;
-  };
+  state: AlertModalState;
+  actions: AlertModalActions;
 }
 
 const initialState: CloseState = { isOpen: false };
@@ -52,7 +54,7 @@ const useAlertModalStore = create<AlertModalStore>()(
   ),
 );
 
-const isOpenState = (s: State): s is OpenState => s.isOpen;
+const isOpenState = (s: AlertModalState): s is OpenState => s.isOpen;
 
 export const useAlertModal = () => {
   return useAlertModalStore(

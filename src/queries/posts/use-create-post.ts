@@ -2,13 +2,13 @@ import { useMutation } from '@tanstack/react-query';
 
 import type { UseMutationCallback } from '@/shared/types';
 
-import { updatePassword } from '@/api/auth-api.ts';
+import { createPostWithImages } from '@/api/posts.ts';
 
-export function useUpdatePasswordMutation(callbacks?: UseMutationCallback) {
+export function useCreatePost(callbacks?: UseMutationCallback) {
   return useMutation({
-    mutationFn: updatePassword,
+    mutationFn: createPostWithImages,
     onSuccess: () => {
-      if (callbacks?.onSuccess) callbacks.onSuccess();
+      if (callbacks?.onSuccess) callbacks?.onSuccess();
     },
     onError: (error) => {
       if (callbacks?.onError) callbacks.onError(error);
