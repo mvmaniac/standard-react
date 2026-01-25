@@ -1,8 +1,10 @@
 import { type ReactNode, useEffect } from 'react';
 
-import { useIsSessionLoaded, useSetSession } from '@/stores/session.ts';
+import { useIsSessionLoaded, useSession, useSetSession } from '@/stores/session.ts';
 
 import GlobalLoader from '@/components/GlobalLoader.tsx';
+
+import { useProfileDataQuery } from '@/queries/use-profile-data-query.ts';
 
 import supabase from '@/shared/supabase.ts';
 
@@ -11,8 +13,11 @@ interface SessionProvidersProps {
 }
 
 export default function SessionProvider({ children }: SessionProvidersProps) {
+  const session = useSession();
   const setSession = useSetSession();
   const isSessionLoaded = useIsSessionLoaded();
+
+  const { isLoading: isProfileLoading } = useProfileDataQuery(session?.user.id ?? '');
 
   useEffect(() => {
     supabase.auth.onAuthStateChange((_event, session) => {
@@ -22,5 +27,7 @@ export default function SessionProvider({ children }: SessionProvidersProps) {
   }, [setSession]);
 
   if (!isSessionLoaded) return <GlobalLoader />;
+  if (isProfileLoading) return <GlobalLoader />;
+
   return children;
 }

@@ -3,11 +3,13 @@ import { Link } from 'react-router';
 
 import { toast } from 'sonner';
 
+import type { ChangeEvent } from 'react';
+
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 
-import { useSignInWithOauthMutation } from '@/queries/use-sign-in-with-oauth-mutation.ts';
-import { useSignInWithPasswordMutation } from '@/queries/use-sign-in-with-password-mutation.ts';
+import { useSignInWithOauthMutation } from '@/queries/auth/use-sign-in-with-oauth-mutation.ts';
+import { useSignInWithPasswordMutation } from '@/queries/auth/use-sign-in-with-password-mutation.ts';
 
 import { generateErrorMessage } from '@/shared/utils';
 
@@ -40,9 +42,8 @@ export default function SignInPage() {
 
   const isPending = isSignInWithPasswordPending || isSignInWithOAuthPending;
 
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
 
   const handleSignInWithPasswordClick = () => {
     if (email.trim() === '') return;
@@ -59,39 +60,42 @@ export default function SignInPage() {
       <div className="text-xl font-bold">로그인</div>
       <div className="flex flex-col gap-2">
         <Input
-          className="py-6"
           type="email"
+          value={email}
           placeholder="email"
           disabled={isPending}
-          value={email}
           onChange={handleChangeEmail}
+          className="py-6"
         />
         <Input
-          className="py-6"
           type="password"
+          value={password}
           placeholder="password"
           disabled={isPending}
-          value={password}
           onChange={handleChangePassword}
+          className="py-6"
         />
       </div>
       <div className="flex flex-col gap-2">
-        <Button className="w-full" disabled={isPending} onClick={handleSignInWithPasswordClick}>
+        <Button disabled={isPending} onClick={handleSignInWithPasswordClick} className="w-full">
           로그인
         </Button>
         <Button
-          className="w-full"
           variant="outline"
           disabled={isPending}
           onClick={handleSignInWithOAuthClick}
+          className="w-full"
         >
           <img src={gitHubLogo} alt="GitHub 로그인 아이콘" className="h-4 w-4" />
           GitHub 계정으로 로그인
         </Button>
       </div>
-      <div>
-        <Link className="text-muted-foreground hover:underline" to={'/sign-up'}>
+      <div className="flex flex-col gap-2">
+        <Link to={'/sign-up'} className="text-muted-foreground hover:underline">
           계정이 없으시다면? 회원가입
+        </Link>
+        <Link to={'/forget-password'} className="text-muted-foreground hover:underline">
+          비밀번호를 잊으셨나요?
         </Link>
       </div>
     </div>

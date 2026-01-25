@@ -1,0 +1,5 @@
+export const EMPTY_ARRAY = [];
+
+export const BUCKET_NAME = 'uploads';
+
+export const POST_PAGE_SIZE = 5;

@@ -1,4 +1,5 @@
 import AppProviders from '@/app/AppProviders.tsx';
+import ModalProvider from '@/app/ModalProvider.tsx';
 import SessionProvider from '@/app/SessionProvider.tsx';
 
 import { Toaster } from '@/components/ui/sonner.tsx';
@@ -10,7 +11,9 @@ export default function App() {
     <AppProviders>
       <Toaster />
       <SessionProvider>
-        <AppRoutes />
+        <ModalProvider>
+          <AppRoutes />
+        </ModalProvider>
       </SessionProvider>
     </AppProviders>
   );

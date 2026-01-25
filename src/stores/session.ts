@@ -1,32 +1,30 @@
 import { create } from 'zustand';
-import { combine, devtools } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 import type { Session } from '@supabase/supabase-js';
 
-interface SessionState {
+interface SessionStore {
   isLoaded: boolean;
   session: Session | null;
+  actions: {
+    setSession: (session: Session | null) => void;
+  };
 }
 
-const initialState: SessionState = {
-  isLoaded: false,
-  session: null,
-};
-
-const useSessionStore = create(
+const useSessionStore = create<SessionStore>()(
   devtools(
-    immer(
-      combine(initialState, (set, _get) => ({
-        actions: {
-          setSession: (session: SessionState['session']) => {
-            set({ session, isLoaded: true });
-          },
+    immer((set) => ({
+      isLoaded: false,
+      session: null,
+      actions: {
+        setSession: (session) => {
+          set({ session, isLoaded: true });
         },
-      })),
-    ),
+      },
+    })),
     {
-      name: 'sessionStore',
+      name: 'SessionStore',
     },
   ),
 );
