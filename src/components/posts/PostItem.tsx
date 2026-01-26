@@ -1,20 +1,34 @@
 import { HeartIcon, MessageCircle } from 'lucide-react';
 
-import type { Post } from '@/shared/types';
-
 import { useSession } from '@/stores/session.ts';
 
+import Fallback from '@/components/Fallback.tsx';
+import Loader from '@/components/Loader.tsx';
 import DeletePostButton from '@/components/posts/DeletePostButton.tsx';
 import EditPostButton from '@/components/posts/EditPostItemButton.tsx';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel.tsx';
+
+import { usePostByIdQuery } from '@/queries/posts/use-post-by-id-query.ts';
 
 import { formatTimeAgo } from '@/shared/utils';
 
 import defaultAvatar from '@/assets/default-avatar.png';
 
-export default function PostItem(post: Post) {
+export default function PostItem({ postId }: { postId: number }) {
+  const {
+    data: post,
+    isPending,
+    error,
+  } = usePostByIdQuery({
+    postId,
+    type: 'FEED',
+  });
+
   const session = useSession();
   const userId = session?.user.id;
+
+  if (error) return <Fallback />;
+  if (isPending) return <Loader />;
 
   const isMine = post.author.id === userId;
 

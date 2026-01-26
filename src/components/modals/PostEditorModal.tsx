@@ -72,9 +72,18 @@ export function PostEditorModal() {
   // TODO:[yhs] useEffectEvent로 일단 문제는 회피 했지만 더 좋은 방법?
   // useEffectEvent로 감싸지 않으면 의존성 문제가 발생함
   const initFormOnOpen = useEffectEvent(() => {
-    setContent(postEditorModal.type === 'EDIT' ? postEditorModal.content : '');
+    const initialContent = postEditorModal.type === 'EDIT' ? postEditorModal.content : '';
+
+    setContent(initialContent);
     setImages([]);
-    textareaRef.current?.focus();
+
+    // setTimeout으로 해도 됨
+    requestAnimationFrame(() => {
+      if (textareaRef.current) {
+        textareaRef.current.focus();
+        textareaRef.current.setSelectionRange(initialContent.length, initialContent.length);
+      }
+    });
   });
 
   const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {

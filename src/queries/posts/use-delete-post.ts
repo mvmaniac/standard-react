@@ -1,17 +1,27 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { UseMutationCallback } from '@/shared/types';
 
 import { deleteImageInPath } from '@/api/images.ts';
 import { deletePost } from '@/api/posts.ts';
 
+import { QUERY_KEYS } from '@/shared/constants';
+
 export function useDeletePost(callbacks?: UseMutationCallback) {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: deletePost,
     onSuccess: async (deletePost) => {
       if (callbacks?.onSuccess) callbacks.onSuccess();
-      if (!deletePost.image_urls || deletePost.image_urls.length <= 0) return
-      await deleteImageInPath(`${deletePost.author_id}/${deletePost.id}`);
+
+      if (deletePost.image_urls && deletePost.image_urls.length > 0) {
+        await deleteImageInPath(`${deletePost.author_id}/${deletePost.id}`);
+      }
+
+      await queryClient.resetQueries({
+        queryKey: QUERY_KEYS.post.list,
+      });
     },
     onError: (error) => {
       if (callbacks?.onError) callbacks.onError(error);
