@@ -1,13 +1,11 @@
 import { PopoverClose } from '@radix-ui/react-popover';
 import { CheckIcon, SunIcon } from 'lucide-react';
 
-import type { Theme } from '@/shared/types';
-
 import { useSetTheme, useTheme } from '@/stores/theme.ts';
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 
-const THEMES: Theme[] = ['system', 'dark', 'light'];
+import { THEMES } from '@/shared/constants';
 
 export default function ThemeButton() {
   const currentTheme = useTheme();

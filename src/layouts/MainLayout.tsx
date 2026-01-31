@@ -1,6 +1,7 @@
 import { Link, Outlet } from 'react-router';
 
 import ProfileButton from '@/components/header/ProfileButton.tsx';
+import ThemeButton from '@/components/header/ThemeButton.tsx';
 
 import logo from '@/assets/logo.png';
 
@@ -17,7 +18,10 @@ export default function MainLayout() {
             />
             <div className="font-bold">한입 로그</div>
           </Link>
-          <ProfileButton />
+          <div className="flex items-center gap-5">
+            <ThemeButton />
+            <ProfileButton />
+          </div>
         </div>
       </header>
       <main className="m-auto w-full max-w-175 flex-1 border-x px-4 py-6">
