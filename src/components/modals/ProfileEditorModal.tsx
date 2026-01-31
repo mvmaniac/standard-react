@@ -1,9 +1,9 @@
-import type { ChangeEvent } from 'react';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
 import { toast } from 'sonner';
 
 import type { Image } from '@/shared/types';
+import type { ChangeEvent } from 'react';
 
 import { useProfileEditorModal } from '@/stores/profile-editor-modal.ts';
 import { useSession } from '@/stores/session.ts';
@@ -61,18 +61,6 @@ export default function ProfileEditorModal() {
     URL.revokeObjectURL(previewUrlRef.current);
     setAvatarImage(null);
     close();
-  };
-
-  const handleFileClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleChangeNickname = (e: ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-  };
-
-  const handleChangeBio = (e: ChangeEvent<HTMLInputElement>) => {
-    setBio(e.target.value);
   };
 
   const handleSelectImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -151,7 +139,7 @@ export default function ProfileEditorModal() {
               <img
                 src={avatarImage?.previewUrl ?? profile.avatar_url ?? defaultAvatar}
                 alt="프로필 이미지"
-                onClick={handleFileClick}
+                onClick={() => fileInputRef.current?.click()}
                 className="h-20 w-20 cursor-pointer rounded-full object-cover"
               />
             </div>
@@ -161,13 +149,17 @@ export default function ProfileEditorModal() {
               <Input
                 value={nickname}
                 disabled={isUpdateProfilePending}
-                onChange={handleChangeNickname}
+                onChange={(e) => setNickname(e.target.value)}
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <div className="text-muted-foreground">소개</div>
-              <Input value={bio} disabled={isUpdateProfilePending} onChange={handleChangeBio} />
+              <Input
+                value={bio}
+                disabled={isUpdateProfilePending}
+                onChange={(e) => setBio(e.target.value)}
+              />
             </div>
 
             <Button

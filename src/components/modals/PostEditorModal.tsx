@@ -93,14 +93,6 @@ export function PostEditorModal() {
     postEditorModal.close();
   };
 
-  const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
-
-  const handleAddImageClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
@@ -182,7 +174,7 @@ export function PostEditorModal() {
           value={content}
           disabled={isPending}
           placeholder="무슨 일이 있었나요?"
-          onChange={handleChangeContent}
+          onChange={(e) => setContent(e.target.value)}
           className="max-h-125 min-h-125 focus:outline-none"
         />
         {postEditorModal.isOpen && postEditorModal.type === 'EDIT' && (
@@ -233,7 +225,7 @@ export function PostEditorModal() {
           <Button
             variant="outline"
             disabled={isPending}
-            onClick={handleAddImageClick}
+            onClick={() => fileInputRef.current?.click()}
             className="cursor-pointer"
           >
             <ImageIcon />

@@ -41,9 +41,6 @@ export default function SignInPage() {
 
   const isPending = isSignInWithPasswordPending || isSignInWithOAuthPending;
 
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-
   const handleSignInWithPasswordClick = () => {
     if (email.trim() === '') return;
     if (password.trim() === '') return;
@@ -63,7 +60,7 @@ export default function SignInPage() {
           value={email}
           placeholder="email"
           disabled={isPending}
-          onChange={handleChangeEmail}
+          onChange={(e) => setEmail(e.target.value)}
           className="py-6"
         />
         <Input
@@ -71,7 +68,7 @@ export default function SignInPage() {
           value={password}
           placeholder="password"
           disabled={isPending}
-          onChange={handleChangePassword}
+          onChange={(e) => setPassword(e.target.value)}
           className="py-6"
         />
       </div>

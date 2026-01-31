@@ -1,9 +1,8 @@
+import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 
 import { toast } from 'sonner';
-
-import type { ChangeEvent } from 'react';
 
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
@@ -25,9 +24,6 @@ export default function SignUpPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-
   const handleSignUpClick = () => {
     if (email.trim() === '') return;
     if (password.trim() === '') return;
@@ -43,7 +39,7 @@ export default function SignUpPage() {
           value={email}
           placeholder="email"
           disabled={isSignUpPending}
-          onChange={handleChangeEmail}
+          onChange={(e) => setEmail(e.target.value)}
           className="py-6"
         />
         <Input
@@ -51,7 +47,7 @@ export default function SignUpPage() {
           value={password}
           placeholder="password"
           disabled={isSignUpPending}
-          onChange={handleChangePassword}
+          onChange={(e) => setPassword(e.target.value)}
           className="py-6"
         />
       </div>

@@ -31,8 +31,6 @@ export default function ForgetPasswordPage() {
 
   const [email, setEmail] = useState('');
 
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
-
   const handleSendEmailClick = () => {
     if (email.trim() === '') return;
     resetPasswordForEmail(email);
@@ -50,7 +48,7 @@ export default function ForgetPasswordPage() {
         value={email}
         placeholder="example@abc.com"
         disabled={isResetPasswordForEmailPending}
-        onChange={handleChangeEmail}
+        onChange={(e) => setEmail(e.target.value)}
         className="py-6"
       />
       <Button

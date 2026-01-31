@@ -33,8 +33,6 @@ export default function ResetPasswordPage() {
 
   const [password, setPassword] = useState('');
 
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value);
-
   const handleUpdatePasswordClick = () => {
     if (password.trim() === '') return;
     updatePassword(password);
@@ -51,7 +49,7 @@ export default function ResetPasswordPage() {
         value={password}
         placeholder="password"
         disabled={isUpdatePasswordPending}
-        onChange={handleChangePassword}
+        onChange={(e) => setPassword(e.target.value)}
         className="py-6"
       />
       <Button
