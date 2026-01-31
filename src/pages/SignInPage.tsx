@@ -27,15 +27,14 @@ export default function SignInPage() {
         setPassword('');
       },
     });
-  const { mutate: signInWithOAuth, isPending: isSignInWithOAuthPending } =
-    useSignInWithOauth({
-      onError: (error) => {
-        const message = generateErrorMessage(error);
-        toast.error(message, {
-          position: 'top-center',
-        });
-      },
-    });
+  const { mutate: signInWithOAuth, isPending: isSignInWithOAuthPending } = useSignInWithOauth({
+    onError: (error) => {
+      const message = generateErrorMessage(error);
+      toast.error(message, {
+        position: 'top-center',
+      });
+    },
+  });
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

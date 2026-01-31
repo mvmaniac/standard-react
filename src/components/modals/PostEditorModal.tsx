@@ -1,10 +1,11 @@
+import type { ChangeEvent } from 'react';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { ImageIcon, XIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-import type { ChangeEvent } from 'react';
+import type { Image } from '@/shared/types';
 
 import { useOpenAlertModal } from '@/stores/alert-modal.ts';
 import { usePostEditorModal } from '@/stores/post-editor-modal.ts';
@@ -17,15 +18,14 @@ import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog.tsx';
 import { useCreatePost } from '@/queries/posts/use-create-post.ts';
 import { useUpdatePost } from '@/queries/posts/use-update-post.ts';
 
-interface Image {
-  file: File;
-  previewUrl: string;
-}
+import { revokePreviewUrls } from '@/shared/utils';
 
 export function PostEditorModal() {
+  const session = useSession();
+
   const { mutate: createPost, isPending: isCreatePostPending } = useCreatePost({
     onSuccess: () => {
-      postEditorModal.close();
+      closeWithCleanUp();
     },
     onError: () => {
       toast.error('포스트 생성에 실패 했습니다', {
@@ -35,7 +35,7 @@ export function PostEditorModal() {
   });
   const { mutate: updatePost, isPending: isUpdatePostPending } = useUpdatePost({
     onSuccess: () => {
-      postEditorModal.close();
+      closeWithCleanUp();
     },
     onError: () => {
       toast.error('포스트 수정에 실패 했습니다', {
@@ -47,13 +47,14 @@ export function PostEditorModal() {
   const postEditorModal = usePostEditorModal();
   const openAlertModal = useOpenAlertModal();
 
-  const session = useSession();
-
   const [content, setContent] = useState('');
   const [images, setImages] = useState<Image[]>([]);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const imagesRef = useRef<Image[]>([]);
+  const wasOpenRef = useRef(false);
 
   const isPending = isCreatePostPending || isUpdatePostPending;
 
@@ -62,11 +63,11 @@ export function PostEditorModal() {
       openAlertModal({
         title: '게시글 작성이 마무리 되지 않았습니다',
         description: '이 화면에서 나가면 작성중이던 내용이 사라집니다',
-        onPositive: () => postEditorModal.close(),
+        onPositive: () => closeWithCleanUp(),
       });
       return;
     }
-    postEditorModal.close();
+    closeWithCleanUp();
   };
 
   // TODO:[yhs] useEffectEvent로 일단 문제는 회피 했지만 더 좋은 방법?
@@ -75,7 +76,6 @@ export function PostEditorModal() {
     const initialContent = postEditorModal.type === 'EDIT' ? postEditorModal.content : '';
 
     setContent(initialContent);
-    setImages([]);
 
     // setTimeout으로 해도 됨
     requestAnimationFrame(() => {
@@ -85,6 +85,13 @@ export function PostEditorModal() {
       }
     });
   });
+
+  const closeWithCleanUp = () => {
+    revokePreviewUrls(imagesRef.current);
+    setImages([]);
+    setContent('');
+    postEditorModal.close();
+  };
 
   const handleChangeContent = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -134,24 +141,39 @@ export function PostEditorModal() {
   };
 
   useEffect(() => {
-    if (!postEditorModal.isOpen) return;
-    initFormOnOpen();
-  }, [postEditorModal.isOpen]);
-
-  useEffect(() => {
     if (!textareaRef.current) return;
     textareaRef.current.style.height = 'auto';
     textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
   }, [content]);
 
   useEffect(() => {
-    return () => {
-      images.forEach((image) => URL.revokeObjectURL(image.previewUrl));
-    };
+    imagesRef.current = images;
   }, [images]);
 
+  useEffect(() => {
+    const wasOpen = wasOpenRef.current;
+    const isOpen = postEditorModal.isOpen;
+
+    // 열리는 순간 (close -> open)
+    if (!wasOpen && isOpen) {
+      initFormOnOpen();
+    }
+
+    // 닫히는 순간 (open -> close)
+    if (wasOpen && !isOpen) {
+      revokePreviewUrls(imagesRef.current);
+    }
+
+    wasOpenRef.current = isOpen;
+  }, [postEditorModal.isOpen]);
+
   return (
-    <Dialog open={postEditorModal.isOpen} onOpenChange={handleCloseModal}>
+    <Dialog
+      open={postEditorModal.isOpen}
+      onOpenChange={(open) => {
+        if (!open) handleCloseModal();
+      }}
+    >
       <DialogContent className="max-h-[90vh]">
         <DialogTitle>포스트 작성</DialogTitle>
         <DialogDescription className="sr-only">포스트 내용을 입력해주세요.</DialogDescription>
@@ -169,7 +191,7 @@ export function PostEditorModal() {
               {postEditorModal.imageUrls?.map((url) => (
                 <CarouselItem key={url} className="basis-2/5">
                   <div className="relative">
-                    <img src={url} alt={url} className="b-full, w-full rounded-sm object-cover" />
+                    <img src={url} alt={url} className="h-full w-full rounded-sm object-cover" />
                   </div>
                 </CarouselItem>
               ))}
@@ -185,7 +207,7 @@ export function PostEditorModal() {
                     <img
                       src={image.previewUrl}
                       alt={image.previewUrl}
-                      className="b-full, w-full rounded-sm object-cover"
+                      className="h-full w-full rounded-sm object-cover"
                     />
                     <div className="absolute top-0 right-0 m-1 cursor-pointer rounded-full bg-black/30 p-1">
                       <XIcon

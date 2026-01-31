@@ -1,8 +1,7 @@
 import { Link, Outlet } from 'react-router';
 
-import { SunIcon } from 'lucide-react';
+import ProfileButton from '@/components/header/ProfileButton.tsx';
 
-import defaultAvatar from '@/assets/default-avatar.png';
 import logo from '@/assets/logo.png';
 
 export default function MainLayout() {
@@ -18,12 +17,7 @@ export default function MainLayout() {
             />
             <div className="font-bold">한입 로그</div>
           </Link>
-          <div className="flex items-center gap-5">
-            <div className="hover:bg-muted cursor-pointer rounded-full p-2">
-              <SunIcon />
-            </div>
-            <img src={defaultAvatar} alt="기본 프로필 이미지" className="h-6" />
-          </div>
+          <ProfileButton />
         </div>
       </header>
       <main className="m-auto w-full max-w-175 flex-1 border-x px-4 py-6">

@@ -7,8 +7,10 @@ import PostItem from '@/components/posts/PostItem.tsx';
 
 import { useInfinitePostsQuery } from '@/queries/posts/use-infinite-posts-query.ts';
 
-export default function PostFeed() {
-  const { data, error, isPending, fetchNextPage, isFetchingNextPage } = useInfinitePostsQuery();
+export default function PostFeed({ authorId }: { authorId?: string }) {
+  const { data, error, isPending, fetchNextPage, isFetchingNextPage } =
+    useInfinitePostsQuery(authorId);
+
   const { ref, inView } = useInView();
 
   useEffect(() => {
@@ -20,7 +22,9 @@ export default function PostFeed() {
 
   return (
     <div className="flex flex-col gap-10">
-      {data.pages.map((page) => page.map((postId) => <PostItem key={postId} postId={postId} />))}
+      {data.pages.map((page) =>
+        page.map((postId) => <PostItem key={postId} postId={postId} type="FEED" />),
+      )}
       {isFetchingNextPage && <Loader />}
       <div ref={ref}></div>
     </div>

@@ -23,7 +23,10 @@ interface EditMode {
 
 type OpenState = CreateMode | EditMode;
 // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
-type CloseState = { type: 'CLOSE', isOpen: false };
+type CloseState = {
+  type: 'CLOSE';
+  isOpen: false;
+};
 
 type PostEditorModalState = OpenState | CloseState;
 
