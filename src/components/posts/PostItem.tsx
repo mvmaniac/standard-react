@@ -20,11 +20,11 @@ import defaultAvatar from '@/assets/default-avatar.png';
 type PostListTye = 'FEED' | 'DETAIL';
 
 export interface PostItemProps {
-  postId: number;
   type: PostListTye;
+  postId: number;
 }
 
-export default function PostItem({ postId, type }: PostItemProps) {
+export default function PostItem({ type, postId }: PostItemProps) {
   const session = useSession();
   const userId = session?.user.id;
 
@@ -33,8 +33,8 @@ export default function PostItem({ postId, type }: PostItemProps) {
     isPending,
     error,
   } = usePostByIdQuery({
-    postId,
     type,
+    postId,
   });
 
   if (error) return <Fallback />;

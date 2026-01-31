@@ -7,11 +7,11 @@ import { fetchPostById } from '@/api/posts.ts';
 import { QUERY_KEYS } from '@/shared/constants';
 
 export function usePostByIdQuery({
-  postId,
   type = 'FEED',
+  postId,
 }: {
-  postId: number;
   type: 'FEED' | 'DETAIL';
+  postId: number;
 }) {
   const session = useSession();
 
