@@ -1,4 +1,3 @@
-import type { ChangeEvent } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router';
 

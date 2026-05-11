@@ -1,4 +1,3 @@
-import type { ChangeEvent } from 'react';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
 
 import { DialogDescription } from '@radix-ui/react-dialog';
@@ -6,6 +5,7 @@ import { ImageIcon, XIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
 import type { Image } from '@/shared/types';
+import type { ChangeEvent } from 'react';
 
 import { useOpenAlertModal } from '@/stores/alert-modal.ts';
 import { usePostEditorModal } from '@/stores/post-editor-modal.ts';

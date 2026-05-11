@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router';
 
 import { toast } from 'sonner';
 
-import type { ChangeEvent } from 'react';
-
 import { Button } from '@/components/ui/button.tsx';
 import { Input } from '@/components/ui/input.tsx';
 

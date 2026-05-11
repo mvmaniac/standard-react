@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { useShallow } from 'zustand/react/shallow';
-import { EMPTY_ARRAY } from '@/shared/constants/variables.ts';
 
 interface ProfileEditorModalState {
   isOpen: boolean;
