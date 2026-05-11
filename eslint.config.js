@@ -4,7 +4,6 @@ import configPrettier from 'eslint-config-prettier';
 import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
 import { importX as pluginImportX } from 'eslint-plugin-import-x';
 import pluginNoRelativeImportPaths from 'eslint-plugin-no-relative-import-paths';
-import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
@@ -34,10 +33,6 @@ export default defineConfig(
   /** @see https://www.npmjs.com/package/eslint-plugin-react-hooks */
   pluginReactHooks.configs.flat.recommended,
 
-  /** @see https://www.npmjs.com/package/eslint-plugin-react */
-  pluginReact.configs.flat.recommended,
-  pluginReact.configs.flat['jsx-runtime'],
-
   configPrettier,
 
   {
@@ -57,9 +52,6 @@ export default defineConfig(
       },
     },
     settings: {
-      react: {
-        version: 'detect',
-      },
       'import-x/resolver-next': [
         createTypeScriptImportResolver({
           alwaysTryTypes: true,
