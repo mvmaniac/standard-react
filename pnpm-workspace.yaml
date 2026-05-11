@@ -1,5 +1,6 @@
-onlyBuiltDependencies:
-  - '@swc/core'
-  - esbuild
-  - supabase
-  - unrs-resolver
+allowBuilds:
+  '@swc/core': true
+  supabase: true
+  unrs-resolver: true
+patchedDependencies:
+  eslint-plugin-no-relative-import-paths@1.6.1: patches/eslint-plugin-no-relative-import-paths@1.6.1.patch
